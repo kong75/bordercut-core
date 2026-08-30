@@ -1,0 +1,40 @@
+{
+  "name": "bordercut",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Language-neutral background-removal specification and TypeScript reference package.",
+  "license": "MIT",
+  "keywords": [
+    "background-removal",
+    "image-processing",
+    "rgba",
+    "segmentation",
+    "typescript"
+  ],
+  "workspaces": [
+    "packages/typescript",
+    "examples/minimal-web"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "npm run build --workspace @bordercut/core && npm run dev --workspace @bordercut/minimal-web-example",
+    "build": "npm run build --workspace @bordercut/core && npm run build --workspace @bordercut/minimal-web-example",
+    "typecheck": "npm run typecheck --workspace @bordercut/core && npm run typecheck --workspace @bordercut/minimal-web-example",
+    "test": "npm run test --workspace @bordercut/core",
+    "test:watch": "npm run test:watch --workspace @bordercut/core",
+    "test:pack": "node scripts/test-package.mjs",
+    "check": "npm run typecheck && npm test && npm run build && npm run test:pack",
+    "pack:core": "npm pack --workspace @bordercut/core",
+    "check:release": "node scripts/check-release-metadata.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "ajv": "^8.20.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3",
+    "vitest": "^3.2.4"
+  }
+}

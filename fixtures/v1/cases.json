@@ -1,0 +1,396 @@
+{
+  "algorithmVersion": 1,
+  "cases": [
+    {
+      "id": "flat-colored-subject",
+      "referenceAlphaSha256": "20ddae97749213e38f0009a8a7625e93d6ec46b9479be3cd3699888655b5005a",
+      "width": 64,
+      "height": 64,
+      "background": [244, 242, 237, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 19, "yMin": 14, "xMax": 44, "yMax": 50, "color": [34, 94, 210, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": true
+      },
+      "assertions": [
+        { "x": 0, "y": 0, "alphaMax": 10 },
+        { "x": 32, "y": 32, "alphaMin": 245 }
+      ],
+      "diagnostics": { "mode": "solid", "removedFractionMin": 0.6 }
+    },
+    {
+      "id": "smooth-horizontal-gradient",
+      "referenceAlphaSha256": "7fbd335ae3c94220bdc0ad2ea8d2d1eafbb3cac88d8adce1b2c6c3bcfe3b8d00",
+      "width": 80,
+      "height": 56,
+      "background": {
+        "type": "linear-gradient",
+        "axis": "x",
+        "from": [230, 237, 252, 255],
+        "to": [202, 247, 234, 255]
+      },
+      "regions": [
+        { "shape": "rect", "xMin": 26, "yMin": 13, "xMax": 55, "yMax": 45, "color": [204, 68, 47, 255] }
+      ],
+      "options": {
+        "tolerance": 42,
+        "edgeProtection": 62,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": true
+      },
+      "assertions": [
+        { "x": 8, "y": 28, "alphaMax": 15 },
+        { "x": 40, "y": 28, "alphaMin": 240 }
+      ],
+      "diagnostics": { "mode": "gradient" }
+    },
+    {
+      "id": "enclosed-hole-preserved",
+      "referenceAlphaSha256": "7ced5cc41fd81bbec63f187468f7bff7ddd4ed7dcec9bc52b83f45fd9b6f7a39",
+      "width": 64,
+      "height": 64,
+      "background": [248, 248, 246, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 12, "yMin": 12, "xMax": 51, "yMax": 51, "color": [166, 54, 66, 255] },
+        { "shape": "rect", "xMin": 25, "yMin": 25, "xMax": 38, "yMax": 38, "color": [248, 248, 246, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 31, "y": 31, "alphaMin": 245 },
+        { "x": 0, "y": 0, "alphaMax": 10 }
+      ]
+    },
+    {
+      "id": "enclosed-hole-opened",
+      "referenceAlphaSha256": "6807d0d45238d3548feb65734f12cd0ac57b02ef9e2e50919c5c6fe57f5718b3",
+      "width": 64,
+      "height": 64,
+      "background": [248, 248, 246, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 12, "yMin": 12, "xMax": 51, "yMax": 51, "color": [166, 54, 66, 255] },
+        { "shape": "rect", "xMin": 25, "yMin": 25, "xMax": 38, "yMax": 38, "color": [248, 248, 246, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": true
+      },
+      "assertions": [
+        { "x": 31, "y": 31, "alphaMax": 10 },
+        { "x": 18, "y": 18, "alphaMin": 245 }
+      ]
+    },
+    {
+      "id": "foreground-correction-marker",
+      "referenceAlphaSha256": "6dbd9b441f594f27e6b2ba582ffff39650e35ea2e89010b3dd9e7cb1418d3df3",
+      "width": 64,
+      "height": 64,
+      "background": [245, 245, 245, 255],
+      "regions": [],
+      "samples": [
+        { "x": 32, "y": 32, "kind": "foreground" }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": true
+      },
+      "assertions": [
+        { "x": 32, "y": 32, "alphaMin": 255 },
+        { "x": 0, "y": 0, "alphaMax": 10 }
+      ]
+    },
+    {
+      "id": "background-correction-marker",
+      "referenceAlphaSha256": "9d66f897a38677003bda234349686ca7a972da6e57f093c78dbcac3990b0d178",
+      "width": 64,
+      "height": 64,
+      "background": [245, 242, 235, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 20, "yMin": 20, "xMax": 43, "yMax": 43, "color": [35, 42, 52, 255] },
+        { "shape": "rect", "xMin": 23, "yMin": 23, "xMax": 40, "yMax": 40, "color": [181, 195, 205, 255] }
+      ],
+      "samples": [
+        { "x": 31, "y": 31, "kind": "background" }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 31, "y": 31, "alphaMax": 10 },
+        { "x": 21, "y": 31, "alphaMin": 245 }
+      ]
+    },
+    {
+      "id": "subject-touching-bottom-edge",
+      "referenceAlphaSha256": "4db7b781b61b7ac08b7dde01de5e2f641236bcfe2e9c7e0c2646c0d3a9efb5b0",
+      "width": 96,
+      "height": 96,
+      "background": [242, 238, 230, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 0, "yMin": 52, "xMax": 95, "yMax": 95, "color": [24, 25, 29, 255] },
+        { "shape": "rect", "xMin": 38, "yMin": 53, "xMax": 58, "yMax": 95, "color": [248, 246, 240, 255] },
+        { "shape": "rect", "xMin": 73, "yMin": 68, "xMax": 79, "yMax": 76, "color": [252, 251, 247, 255] },
+        { "shape": "ellipse", "centerX": 48, "centerY": 34, "radiusX": 17, "radiusY": 24, "color": [224, 178, 150, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": true,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 48, "y": 34, "alphaMin": 245 },
+        { "x": 48, "y": 90, "alphaMin": 245 },
+        { "x": 10, "y": 90, "alphaMin": 245 },
+        { "x": 76, "y": 72, "alphaMin": 245 },
+        { "x": 4, "y": 4, "alphaMax": 10 }
+      ]
+    },
+    {
+      "id": "enclosed-background-panel",
+      "referenceAlphaSha256": "6cb02697dfe23aa9ca598e925974315f6ac44d64f3e22605ad088677c1d95820",
+      "width": 96,
+      "height": 72,
+      "background": [242, 238, 230, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 12, "yMin": 14, "xMax": 52, "yMax": 55, "color": [142, 126, 108, 255] },
+        { "shape": "rect", "xMin": 15, "yMin": 17, "xMax": 49, "yMax": 52, "color": [242, 238, 230, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 76,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 30, "y": 34, "alphaMax": 10 },
+        { "x": 13, "y": 34, "alphaMin": 245 }
+      ]
+    },
+    {
+      "id": "pale-subject-channel",
+      "referenceAlphaSha256": "f311372584c03d7fafbaafd7e116bc98da934532fbe846a44a2c2783c7106d18",
+      "width": 128,
+      "height": 128,
+      "background": [243, 240, 232, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 12, "yMin": 12, "xMax": 115, "yMax": 111, "color": [180, 170, 158, 255] },
+        { "shape": "rect", "xMin": 61, "yMin": 70, "xMax": 66, "yMax": 111, "color": [239, 236, 228, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": true,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 63, "y": 92, "alphaMin": 245 },
+        { "x": 63, "y": 120, "alphaMax": 10 }
+      ],
+      "diagnostics": {
+        "subjectRecoveryApplied": true,
+        "recoveredFractionMin": 0.001
+      }
+    },
+    {
+      "id": "exterior-arch",
+      "referenceAlphaSha256": "b6339397d733d4440eca6cc13ccc9a9ac1bbba5c3004d43b4ceb01cfa66b55c8",
+      "width": 128,
+      "height": 128,
+      "background": [243, 240, 232, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 12, "yMin": 12, "xMax": 115, "yMax": 127, "color": [72, 82, 94, 255] },
+        { "shape": "rect", "xMin": 54, "yMin": 55, "xMax": 73, "yMax": 127, "color": [243, 240, 232, 255] }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": true,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 40, "y": 86, "alphaMin": 245 },
+        { "x": 63, "y": 96, "alphaMax": 10 }
+      ]
+    },
+    {
+      "id": "background-guidance-stroke",
+      "referenceAlphaSha256": "d5f2b40316b163f7472deb0858c905ba826d8da565c18bb40c910602d8ecec02",
+      "width": 48,
+      "height": 32,
+      "background": [246, 243, 236, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 5, "yMin": 4, "xMax": 42, "yMax": 27, "color": [35, 65, 150, 255] },
+        { "shape": "rect", "xMin": 12, "yMin": 10, "xMax": 35, "yMax": 21, "color": [120, 190, 120, 255] }
+      ],
+      "strokes": [
+        {
+          "kind": "background",
+          "radius": 1,
+          "points": [
+            { "x": 16, "y": 15 },
+            { "x": 20, "y": 15 }
+          ]
+        }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 32, "y": 18, "alphaMax": 0 },
+        { "x": 8, "y": 15, "alphaMin": 255 }
+      ]
+    },
+    {
+      "id": "foreground-guidance-stroke",
+      "referenceAlphaSha256": "ffac61b7ea859d0b076f78ef7fa664b010a3aaea6a3da0e59cc7d025ce6107de",
+      "width": 48,
+      "height": 32,
+      "background": [246, 243, 236, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 10, "yMin": 7, "xMax": 37, "yMax": 24, "color": [225, 220, 210, 255] }
+      ],
+      "strokes": [
+        {
+          "kind": "foreground",
+          "radius": 1,
+          "points": [
+            { "x": 19, "y": 15 },
+            { "x": 23, "y": 15 }
+          ]
+        }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": false,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 34, "y": 20, "alphaMin": 255 },
+        { "x": 5, "y": 15, "alphaMax": 0 }
+      ]
+    },
+    {
+      "id": "background-guidance-locality",
+      "referenceAlphaSha256": "7b44a1106b70eabde9d222e3e3589f86c0603653e6b70a7f81b89052204d1943",
+      "width": 160,
+      "height": 60,
+      "background": [246, 243, 236, 255],
+      "regions": [
+        { "shape": "rect", "xMin": 5, "yMin": 5, "xMax": 154, "yMax": 54, "color": [38, 57, 104, 255] },
+        { "shape": "rect", "xMin": 15, "yMin": 18, "xMax": 45, "yMax": 42, "color": [82, 174, 112, 255] },
+        { "shape": "rect", "xMin": 115, "yMin": 18, "xMax": 145, "yMax": 42, "color": [82, 174, 112, 255] },
+        { "shape": "rect", "xMin": 46, "yMin": 30, "xMax": 114, "yMax": 30, "color": [82, 174, 112, 255] }
+      ],
+      "strokes": [
+        {
+          "kind": "background",
+          "radius": 1,
+          "points": [
+            { "x": 25, "y": 30 },
+            { "x": 30, "y": 30 }
+          ]
+        }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": true,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 40, "y": 30, "alphaMax": 0 },
+        { "x": 130, "y": 30, "alphaMin": 255 }
+      ]
+    },
+    {
+      "id": "foreground-guidance-locality",
+      "referenceAlphaSha256": "2723a165d858e6dced8c22c4c6c9877ab9f04d7f86398c09f7ba07e891effadf",
+      "width": 160,
+      "height": 60,
+      "background": [246, 243, 236, 255],
+      "regions": [],
+      "strokes": [
+        {
+          "kind": "foreground",
+          "radius": 1,
+          "points": [
+            { "x": 25, "y": 30 },
+            { "x": 30, "y": 30 }
+          ]
+        }
+      ],
+      "options": {
+        "tolerance": 46,
+        "edgeProtection": 58,
+        "feather": 0,
+        "cleanup": 0,
+        "protectCenter": false,
+        "recoverPaleSubject": false,
+        "interiorBackground": false
+      },
+      "assertions": [
+        { "x": 40, "y": 30, "alphaMin": 255 },
+        { "x": 130, "y": 30, "alphaMax": 0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+name: Bug report
+description: Report a reproducible defect in the core package, specification, fixtures, or example.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve BorderCut. Do not attach confidential images or report security vulnerabilities here; follow SECURITY.md for private reports.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - TypeScript core package
+        - Minimal web example
+        - Portable specification or schema
+        - Shared fixtures
+        - Documentation or tooling
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: 0.2.0 or a commit identifier
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include Node or browser version, operating system, and package manager.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide privacy-safe RGBA dimensions/data, a fixture recipe, or a small repository.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Include options, diagnostics, logs, or non-confidential screenshots when relevant.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I reproduced this with the latest supported version.
+          required: true
+        - label: I removed secrets, personal data, and confidential images.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

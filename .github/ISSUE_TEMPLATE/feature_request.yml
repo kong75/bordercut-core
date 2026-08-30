@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a focused improvement to BorderCut.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - TypeScript core package
+        - Minimal web example
+        - Portable specification or schema
+        - Shared fixtures
+        - New language port
+        - Documentation or tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user need or compatibility gap, not only the proposed implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain the public contract, expected result, and relevant tradeoffs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: checkboxes
+    id: compatibility
+    attributes:
+      label: Compatibility
+      options:
+        - label: I considered effects on the portable specification and shared fixtures.
+        - label: I can help implement or test this change.

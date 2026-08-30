@@ -1,0 +1,19 @@
+node_modules/
+**/dist/
+.vite/
+coverage/
+*.log
+*.tgz
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Future Dart and Flutter ports
+.dart_tool/
+.packages
+.pub/
+build/
+
+# Future Go port
+*.test

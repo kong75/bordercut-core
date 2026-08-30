@@ -1,0 +1,44 @@
+{
+  "name": "@bordercut/core",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Dependency-free, rule-based background removal for RGBA pixel buffers.",
+  "license": "MIT",
+  "keywords": [
+    "background-removal",
+    "image-processing",
+    "rgba",
+    "segmentation",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

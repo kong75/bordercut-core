@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:bordercut:options:v1",
+  "title": "BorderCut algorithm v1 options",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "tolerance": { "type": "number", "minimum": 0, "maximum": 100, "default": 46 },
+    "edgeProtection": { "type": "number", "minimum": 0, "maximum": 100, "default": 58 },
+    "feather": { "type": "integer", "minimum": 0, "maximum": 12, "default": 2 },
+    "cleanup": { "type": "integer", "minimum": 0, "maximum": 3, "default": 1 },
+    "protectCenter": { "type": "boolean", "default": true },
+    "recoverPaleSubject": { "type": "boolean", "default": true },
+    "interiorBackground": { "type": "boolean", "default": false }
+  }
+}
