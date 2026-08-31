@@ -14,6 +14,7 @@ coverage/
 .packages
 .pub/
 build/
+/pubspec.lock
 
 # Future Go port
 *.test

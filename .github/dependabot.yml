@@ -14,3 +14,12 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dart-development-dependencies:
+        dependency-type: development

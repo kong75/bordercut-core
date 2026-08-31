@@ -3,14 +3,16 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Language-neutral background-removal specification and TypeScript reference package.",
+  "description": "Language-neutral background-removal specification with native TypeScript and Dart packages.",
   "license": "MIT",
   "keywords": [
     "background-removal",
     "image-processing",
     "rgba",
     "segmentation",
-    "typescript"
+    "typescript",
+    "dart",
+    "flutter"
   ],
   "workspaces": [
     "packages/typescript",

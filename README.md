@@ -2,7 +2,7 @@
 
 BorderCut is a small, deterministic background-removal algorithm for images with a visually separable boundary. It uses classical image analysis—no model weights, network requests, accounts, or uploads.
 
-The project is organized as a language-neutral specification with a TypeScript reference implementation. Dart/Flutter and Go ports have reserved package homes and will share the same options, fixtures, and result contract.
+The project is organized as a language-neutral specification with native TypeScript and Dart implementations. Both implementations share the same options, fixtures, result contract, and byte-exact algorithm-v1 alpha output. Flutter codecs and isolate processing live in a separate adapter package; Go remains planned.
 
 The project is currently **pre-1.0 alpha software**. The algorithm contract is versioned, but package APIs may still change between minor releases.
 
@@ -13,7 +13,8 @@ The project is currently **pre-1.0 alpha software**. The algorithm contract is v
 | TypeScript | Reference implementation, algorithm v1 |
 | Minimal web example | Working reference integration |
 | Node + sharp example | Working file-to-PNG integration |
-| Dart / Flutter | Planned; contract documented |
+| Dart | Native implementation, algorithm v1, fixture-compatible |
+| Flutter | Native codec and isolate adapter |
 | Go | Planned; contract documented |
 
 ## Repository layout
@@ -24,7 +25,8 @@ bordercut/
   fixtures/v1/             Shared cross-language conformance cases
   packages/
     typescript/            Publishable @bordercut/core package
-    dart/                  Reserved pure-Dart/Flutter port
+    dart/                  Pure-Dart algorithm-v1 package
+    flutter/               Flutter codecs and isolate adapter
     go/                    Reserved Go port
   examples/
     minimal-web/           Unbranded Web Worker integration example
@@ -35,7 +37,7 @@ The core packages accept decoded RGBA bytes. Image codecs, resizing, UI, files, 
 
 ## Run locally
 
-Node.js 20.19 or newer and npm are required.
+For TypeScript, Node.js 20.19 or newer and npm are required.
 
 ```bash
 npm ci
@@ -44,6 +46,17 @@ npm run dev
 ```
 
 The example is served locally by Vite. Its production build is written to `examples/minimal-web/dist/`; the TypeScript library is written to `packages/typescript/dist/`.
+
+For Dart and Flutter, use Flutter 3.24 or newer (the workspace currently tests
+with Flutter 3.41.7):
+
+```bash
+flutter pub get
+dart analyze packages/dart
+dart test packages/dart
+flutter analyze packages/flutter
+flutter test packages/flutter
+```
 
 ## TypeScript API
 
@@ -93,6 +106,38 @@ Inputs are validated at runtime. Width and height must be positive safe integers
 
 The optional third argument accepts `{ samples, strokes }`. Samples influence classification and connected-region decisions within an engine-derived area. Brush strokes seed smart, color- and edge-aware local region guidance: `background` guides removal and `foreground` guides subject retention. Their effect may extend beyond the painted line, but bounded reach prevents a stroke from following matching colors across the image. Strokes run in array order after the global baseline is stable: a new Remove stroke can only lower alpha, while a new Keep stroke can only raise it. Stroke radius and points use image-pixel coordinates, and later strokes override earlier grown corrections where they reach. Passing a sample array directly remains supported for compatibility.
 
+## Dart and Flutter APIs
+
+The pure Dart package exposes the same pixel-level contract without JavaScript,
+FFI, network access, or runtime dependencies:
+
+```dart
+final result = removeBackground(
+  PixelImage(width: width, height: height, data: rgba),
+  guidance: const RemovalGuidance(
+    strokes: [
+      BrushStroke(
+        kind: SampleKind.background,
+        radius: 8,
+        points: [StrokePoint(x: 24, y: 30), StrokePoint(x: 80, y: 42)],
+      ),
+    ],
+  ),
+);
+```
+
+The separate Flutter adapter keeps engine concerns out of the core package. It
+can decode supported image bytes, run the algorithm outside the UI isolate, and
+encode the result as a transparent PNG:
+
+```dart
+final output = await removeBackgroundFromBytes(encodedImageBytes);
+final transparentPng = output.png;
+```
+
+See [`packages/dart`](packages/dart) and [`packages/flutter`](packages/flutter)
+for complete package usage.
+
 ## Algorithm overview
 
 1. Sample and cluster plausible background colors around the image perimeter.
@@ -129,7 +174,7 @@ Every implementation should:
 - pass the shared cases in `fixtures/v1/cases.json`;
 - remain deterministic for identical bytes, dimensions, options, and correction guidance.
 
-The TypeScript implementation is the numerical reference until another port reaches fixture compatibility.
+TypeScript remains the specification reference. The Dart port is independently implemented and must retain byte-exact alpha compatibility with every published algorithm-v1 fixture.
 
 ## Known limits
 

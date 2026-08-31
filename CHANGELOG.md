@@ -13,6 +13,9 @@ All notable changes to BorderCut are documented here. The project follows Semant
 - Runtime validation for images, options, and correction guidance.
 - Expanded portable fixtures covering gradients, enclosed holes, correction markers, lower-edge subjects, pale-subject recovery, and exterior openings.
 - Smart, bounded local, color- and edge-aware remove/keep stroke guidance in the core package, portable fixtures, and reference example, with brush sizing, undo, and clear controls.
+- Native pure-Dart algorithm-v1 package with byte-exact fixture compatibility.
+- Separate Flutter codec and isolate adapter with transparent PNG helpers.
+- Dart/Flutter analysis, tests, and dry-run archive validation in CI.
 
 ### Changed
 
