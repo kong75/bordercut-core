@@ -1,6 +1,15 @@
 import './styles.css';
-import { removeBackground } from '@bordercut/core';
-import type { BrushStroke, PixelImage, SampleKind, StrokePoint } from '@bordercut/core';
+import type {
+  BrushStroke,
+  PixelImage,
+  RemovalResult,
+  SampleKind,
+  StrokePoint,
+} from '@bordercut/core';
+
+type WorkerResponse =
+  | { ok: true; result: RemovalResult }
+  | { ok: false; error: string };
 
 const element = <T extends Element>(selector: string): T => {
   const value = document.querySelector<T>(selector);
@@ -9,6 +18,7 @@ const element = <T extends Element>(selector: string): T => {
 };
 
 const fileInput = element<HTMLInputElement>('#file');
+const sampleButton = element<HTMLButtonElement>('#sample');
 const toolInput = element<HTMLSelectElement>('#tool');
 const radiusInput = element<HTMLInputElement>('#radius');
 const radiusValue = element<HTMLOutputElement>('#radiusValue');
@@ -29,11 +39,13 @@ let sourceName = 'bordercut-result';
 let strokes: BrushStroke[] = [];
 let activePoints: StrokePoint[] | undefined;
 let activePointer: number | undefined;
+let activeWorker: Worker | undefined;
+let isProcessing = false;
 
 const updateButtons = (): void => {
   undoButton.disabled = strokes.length === 0;
   clearButton.disabled = strokes.length === 0;
-  downloadButton.disabled = !source;
+  downloadButton.disabled = !source || isProcessing;
 };
 
 const clearGuide = (): void => {
@@ -42,16 +54,58 @@ const clearGuide = (): void => {
 
 const process = (): void => {
   if (!source) return;
-  const started = performance.now();
-  const result = removeBackground(source, {}, { strokes });
-  resultContext.putImageData(
-    new ImageData(new Uint8ClampedArray(result.image.data), result.image.width, result.image.height),
-    0,
-    0,
-  );
-  clearGuide();
-  status.textContent = `Applied ${strokes.length} correction${strokes.length === 1 ? '' : 's'} in ${Math.round(performance.now() - started)} ms.`;
+  activeWorker?.terminate();
+  const worker = new Worker(new URL('./removal-worker.ts', import.meta.url), { type: 'module' });
+  activeWorker = worker;
+  isProcessing = true;
+  status.textContent = 'Processing in a Web Worker…';
   updateButtons();
+
+  worker.addEventListener('message', (event: MessageEvent<WorkerResponse>) => {
+    if (worker !== activeWorker) return;
+    activeWorker = undefined;
+    isProcessing = false;
+    worker.terminate();
+
+    if (!event.data.ok) {
+      status.textContent = event.data.error;
+      updateButtons();
+      return;
+    }
+
+    const { result } = event.data;
+    resultContext.putImageData(
+      new ImageData(
+        new Uint8ClampedArray(result.image.data),
+        result.image.width,
+        result.image.height,
+      ),
+      0,
+      0,
+    );
+    clearGuide();
+    status.textContent = `Applied ${strokes.length} correction${strokes.length === 1 ? '' : 's'} in ${Math.round(result.diagnostics.elapsedMs)} ms without blocking the page.`;
+    updateButtons();
+  });
+
+  worker.addEventListener('error', (event) => {
+    if (worker !== activeWorker) return;
+    activeWorker = undefined;
+    isProcessing = false;
+    worker.terminate();
+    status.textContent = event.message || 'Background removal failed in the Web Worker.';
+    updateButtons();
+  });
+
+  const workerImage: PixelImage = {
+    width: source.width,
+    height: source.height,
+    data: new Uint8ClampedArray(source.data),
+  };
+  worker.postMessage(
+    { image: workerImage, strokes },
+    [workerImage.data.buffer as ArrayBuffer],
+  );
 };
 
 const pointFromEvent = (event: PointerEvent): StrokePoint => {
@@ -77,6 +131,18 @@ const drawActiveGuide = (): void => {
   guideContext.stroke();
 };
 
+const loadSource = (image: PixelImage, name: string): void => {
+  source = image;
+  sourceName = name;
+  strokes = [];
+  resultCanvas.width = source.width;
+  resultCanvas.height = source.height;
+  guideCanvas.width = source.width;
+  guideCanvas.height = source.height;
+  stage.hidden = false;
+  process();
+};
+
 fileInput.addEventListener('change', async () => {
   const file = fileInput.files?.[0];
   if (!file) return;
@@ -89,15 +155,34 @@ fileInput.addEventListener('change', async () => {
   decodeContext.drawImage(bitmap, 0, 0);
   bitmap.close();
   const imageData = decodeContext.getImageData(0, 0, decodeCanvas.width, decodeCanvas.height);
-  source = { width: imageData.width, height: imageData.height, data: imageData.data };
-  sourceName = file.name.replace(/\.[^.]+$/, '') || 'bordercut-result';
-  strokes = [];
-  resultCanvas.width = source.width;
-  resultCanvas.height = source.height;
-  guideCanvas.width = source.width;
-  guideCanvas.height = source.height;
-  stage.hidden = false;
-  process();
+  loadSource(
+    { width: imageData.width, height: imageData.height, data: imageData.data },
+    file.name.replace(/\.[^.]+$/, '') || 'bordercut-result',
+  );
+});
+
+sampleButton.addEventListener('click', () => {
+  const width = 240;
+  const height = 180;
+  const data = new Uint8ClampedArray(width * height * 4);
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const index = (y * width + x) * 4;
+      data[index] = 246 - Math.round((x / width) * 8);
+      data[index + 1] = 243 - Math.round((y / height) * 6);
+      data[index + 2] = 237 + Math.round((x / width) * 5);
+      data[index + 3] = 255;
+
+      const normalizedX = (x - width / 2) / 58;
+      const normalizedY = (y - height / 2) / 68;
+      if (normalizedX * normalizedX + normalizedY * normalizedY <= 1) {
+        data[index] = 31;
+        data[index + 1] = 78 + Math.round((y / height) * 24);
+        data[index + 2] = 148 + Math.round((x / width) * 30);
+      }
+    }
+  }
+  loadSource({ width, height, data }, 'bordercut-sample');
 });
 
 guideCanvas.addEventListener('pointerdown', (event) => {

@@ -12,6 +12,7 @@ The project is currently **pre-1.0 alpha software**. The algorithm contract is v
 | --- | --- |
 | TypeScript | Reference implementation, algorithm v1 |
 | Minimal web example | Working reference integration |
+| Node + sharp example | Working file-to-PNG integration |
 | Dart / Flutter | Planned; contract documented |
 | Go | Planned; contract documented |
 
@@ -26,7 +27,8 @@ bordercut/
     dart/                  Reserved pure-Dart/Flutter port
     go/                    Reserved Go port
   examples/
-    minimal-web/           Unbranded browser integration example
+    minimal-web/           Unbranded Web Worker integration example
+    node-sharp/            Runnable Node file adapter example
 ```
 
 The core packages accept decoded RGBA bytes. Image codecs, resizing, UI, files, and networking stay in adapters and applications.
@@ -75,7 +77,17 @@ const result = removeBackground(
 // result.diagnostics.algorithmVersion: portable algorithm contract version
 ```
 
-The package has no runtime dependencies. It does not decode or encode image files.
+The package has no runtime dependencies. The default core entry does not decode or encode image files.
+
+For a one-call browser workflow, the optional `@bordercut/core/browser` subpath accepts a `Blob` or `File` and returns the complete result plus a transparent PNG `Blob`:
+
+```ts
+import { removeBackgroundFromBlob } from '@bordercut/core/browser';
+
+const { blob, diagnostics } = await removeBackgroundFromBlob(file);
+```
+
+This adapter uses browser-native codecs and remains separate from the default entry point. Interactive applications should process pixels in a Web Worker, as demonstrated by `examples/minimal-web`. Node applications can follow the runnable `examples/node-sharp` integration.
 
 Inputs are validated at runtime. Width and height must be positive safe integers, RGBA data must be a sufficiently large `Uint8ClampedArray`, numeric options must be finite and within their documented ranges, and correction samples and strokes must fall inside the image.
 

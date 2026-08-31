@@ -6,6 +6,9 @@ All notable changes to BorderCut are documented here. The project follows Semant
 
 ### Added
 
+- Optional `@bordercut/core/browser` Blob-to-transparent-PNG adapter with focused tests.
+- Web Worker processing in the minimal browser example, using transferable pixel buffers.
+- Runnable Node + `sharp` file-to-PNG integration example and automated smoke test.
 - Release-readiness validation, package-consumer smoke testing, governance documents, and contribution templates.
 - Runtime validation for images, options, and correction guidance.
 - Expanded portable fixtures covering gradients, enclosed holes, correction markers, lower-edge subjects, pale-subject recovery, and exterior openings.

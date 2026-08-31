@@ -19,7 +19,7 @@ Run the minimal browser example during interactive work:
 npm run dev
 ```
 
-`npm run check` runs unit and conformance tests, builds the core and demo, creates the core tarball in an isolated temporary directory, installs it as a consumer, imports it at runtime, and compiles against its declarations.
+`npm run check` runs unit and conformance tests, builds the core and examples, exercises the Node file pipeline, creates the core tarball in an isolated temporary directory, installs it as a consumer, imports both package entry points at runtime, and compiles against their declarations.
 
 ## Repository rules
 

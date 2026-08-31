@@ -51,6 +51,30 @@ const result = removeBackground(
 // result.diagnostics: algorithm version and processing details
 ```
 
+### Browser Blob convenience API
+
+Applications that do not already have decoded pixels can use the optional browser entry point:
+
+```ts
+import { removeBackgroundFromBlob } from '@bordercut/core/browser';
+
+const result = await removeBackgroundFromBlob(file, { feather: 2 });
+const transparentPng: Blob = result.blob;
+```
+
+The browser adapter accepts a `Blob` or `File`, decodes it with browser canvas APIs, invokes the same deterministic core, and returns the complete result plus an encoded transparent PNG. It also exports `decodeImageBlob` and `encodePngBlob` for applications that need the individual steps.
+
+Importing `@bordercut/core` does not include the adapter. The raw core remains free of codecs and browser globals. For responsive interfaces, call the core or browser adapter inside a Web Worker; see `examples/minimal-web/src/removal-worker.ts`.
+
+### Node file example
+
+The runnable `examples/node-sharp` workspace demonstrates JPEG/PNG decoding, core processing, and transparent PNG encoding with `sharp` as an application dependency:
+
+```bash
+npm run build
+npm start --workspace @bordercut/node-sharp-example -- input.jpg output.png
+```
+
 The input buffer is not mutated. Extra bytes after `width * height * 4` are ignored, and output buffers are sized exactly to the image dimensions.
 
 ## Input contract
@@ -87,6 +111,8 @@ Partial option objects are accepted; omitted values use the defaults exported as
 - `DEFAULT_OPTIONS`
 - `ALGORITHM_VERSION`
 - `PixelImage`, `RemovalOptions`, `RemovalResult`, `RemovalDiagnostics`, `RemovalGuidance`, `RemovalGuidanceInput`, `SamplePoint`, `BrushStroke`, `StrokePoint`, `SampleKind`, and `BackgroundColor` types
+
+The `@bordercut/core/browser` subpath exports `removeBackgroundFromBlob`, `decodeImageBlob`, `encodePngBlob`, and the `BrowserRemovalResult` type.
 
 The npm tarball includes TypeScript sources so its JavaScript and declaration source maps resolve correctly. The portable specification and cross-language fixtures live in the source repository; its canonical hosting URL will be added to package metadata before the first hosted release.
 

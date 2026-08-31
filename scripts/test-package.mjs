@@ -51,7 +51,10 @@ try {
     'README.md',
     'dist/index.js',
     'dist/index.d.ts',
+    'dist/browser.js',
+    'dist/browser.d.ts',
     'src/index.ts',
+    'src/browser.ts',
     'package.json',
   ]) {
     assert(packagedFiles.has(requiredPath), `Package is missing ${requiredPath}.`);
@@ -72,9 +75,13 @@ try {
   const smokeSource = `
 import assert from 'node:assert/strict';
 import { ALGORITHM_VERSION, DEFAULT_OPTIONS, removeBackground } from '@bordercut/core';
+import { decodeImageBlob, encodePngBlob, removeBackgroundFromBlob } from '@bordercut/core/browser';
 
 assert.equal(ALGORITHM_VERSION, 1);
 assert.equal(DEFAULT_OPTIONS.tolerance, 46);
+assert.equal(typeof decodeImageBlob, 'function');
+assert.equal(typeof encodePngBlob, 'function');
+assert.equal(typeof removeBackgroundFromBlob, 'function');
 const width = 4;
 const height = 4;
 const data = new Uint8ClampedArray(width * height * 4);
@@ -99,9 +106,11 @@ assert.equal(guided.alpha[width + 1], 255);
   await writeFile(
     join(consumerRoot, 'smoke.ts'),
     `import { removeBackground, type BrushStroke, type PixelImage } from '@bordercut/core';\n` +
+      `import { removeBackgroundFromBlob, type BrowserRemovalResult } from '@bordercut/core/browser';\n` +
       `const image: PixelImage = { width: 1, height: 1, data: new Uint8ClampedArray(4) };\n` +
       `const stroke: BrushStroke = { kind: 'background', radius: 1, points: [{ x: 0, y: 0 }] };\n` +
-      `removeBackground(image, {}, { strokes: [stroke] }).alpha satisfies Uint8ClampedArray;\n`,
+      `removeBackground(image, {}, { strokes: [stroke] }).alpha satisfies Uint8ClampedArray;\n` +
+      `removeBackgroundFromBlob(new Blob()).then((result: BrowserRemovalResult) => result.blob);\n`,
   );
 
   run(process.execPath, ['smoke.mjs'], consumerRoot);
