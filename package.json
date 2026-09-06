@@ -30,7 +30,7 @@
     "benchmark": "npm run build --workspace @bordercut/core && node scripts/benchmark.mjs",
     "dev": "npm run build --workspace @bordercut/core && npm run dev --workspace @bordercut/minimal-web-example",
     "build": "npm run build --workspace @bordercut/core && npm run build --workspace @bordercut/minimal-web-example && npm run build --workspace @bordercut/node-sharp-example",
-    "typecheck": "npm run typecheck --workspace @bordercut/core && npm run typecheck --workspace @bordercut/minimal-web-example && npm run typecheck --workspace @bordercut/node-sharp-example",
+    "typecheck": "npm run build --workspace @bordercut/core && npm run typecheck --workspace @bordercut/core && npm run typecheck --workspace @bordercut/minimal-web-example && npm run typecheck --workspace @bordercut/node-sharp-example",
     "test": "npm run test --workspace @bordercut/core",
     "test:watch": "npm run test:watch --workspace @bordercut/core",
     "test:pack": "node scripts/test-package.mjs",

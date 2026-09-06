@@ -6,6 +6,7 @@ All notable changes to BorderCut are documented here. The project follows Semant
 
 ### Fixed
 
+- Build the TypeScript core declarations before type-checking consuming examples, so validation works from a clean checkout.
 - Flutter codecs now convert correctly between the core's straight RGBA and native premultiplied RGBA, validate encoding inputs, and release native resources on codec initialization failures.
 
 ### Added
