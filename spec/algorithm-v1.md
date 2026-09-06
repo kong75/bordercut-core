@@ -64,7 +64,7 @@ Implementations follow these stages in order:
 - **Fixture compatible:** passes every assertion in `fixtures/v1/cases.json`.
 - **Reference compatible:** matches the TypeScript implementation's alpha output within an agreed tolerance on the full golden corpus.
 
-The initial Dart and Go packages should target fixture compatibility. Exact floating-point parity is not required across runtimes unless a fixture explicitly requires it.
+New implementations should first target fixture compatibility. The native Dart implementation also matches the reference alpha fingerprints. Exact floating-point parity is not required across runtimes unless a fixture explicitly requires it.
 
 ## Determinism
 

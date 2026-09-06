@@ -53,6 +53,8 @@ try {
     'dist/index.d.ts',
     'dist/browser.js',
     'dist/browser.d.ts',
+    'dist/core.min.js',
+    'dist/browser.min.js',
     'src/index.ts',
     'src/browser.ts',
     'package.json',
@@ -76,12 +78,15 @@ try {
 import assert from 'node:assert/strict';
 import { ALGORITHM_VERSION, DEFAULT_OPTIONS, removeBackground } from '@bordercut/core';
 import { decodeImageBlob, encodePngBlob, removeBackgroundFromBlob } from '@bordercut/core/browser';
+import { removeBackground as standaloneRemoveBackground } from './node_modules/@bordercut/core/dist/core.min.js';
+import { removeBackgroundFromBlob as standaloneFromBlob } from './node_modules/@bordercut/core/dist/browser.min.js';
 
 assert.equal(ALGORITHM_VERSION, 1);
 assert.equal(DEFAULT_OPTIONS.tolerance, 46);
 assert.equal(typeof decodeImageBlob, 'function');
 assert.equal(typeof encodePngBlob, 'function');
 assert.equal(typeof removeBackgroundFromBlob, 'function');
+assert.equal(typeof standaloneFromBlob, 'function');
 const width = 4;
 const height = 4;
 const data = new Uint8ClampedArray(width * height * 4);
@@ -92,6 +97,7 @@ for (let index = 0; index < data.length; index += 4) {
   data[index + 3] = 255;
 }
 const result = removeBackground({ width, height, data });
+assert.deepEqual(standaloneRemoveBackground({ width, height, data }).alpha, result.alpha);
 assert.equal(result.alpha.length, width * height);
 assert.equal(result.image.data.length, width * height * 4);
 assert.equal(result.diagnostics.algorithmVersion, ALGORITHM_VERSION);

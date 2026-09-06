@@ -2,7 +2,7 @@
   "name": "@bordercut/core",
   "version": "0.2.0",
   "type": "module",
-  "description": "Dependency-free, rule-based background removal for RGBA pixel buffers.",
+  "description": "Tiny, dependency-free background removal. Runs locally in browsers, Web Workers, and Node.js without model downloads.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/kong75/bordercut-core.git" },
   "homepage": "https://github.com/kong75/bordercut-core#readme",
@@ -38,7 +38,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node ../../scripts/build-browser.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",
     "test": "vitest run",
     "test:watch": "vitest",

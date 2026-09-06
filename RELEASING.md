@@ -21,6 +21,7 @@ this repository.
 1. Start from a clean checkout of the intended release commit.
 2. Use a supported Node version and run `npm ci`.
 3. Run `npm run check`.
+   This includes the standalone browser size budgets and package import checks.
 4. Run `npm audit` and review every result.
 5. Confirm that `CHANGELOG.md`, package versions, the algorithm version, and fixture version agree.
 6. Run `npm pack --workspace @bordercut/core --dry-run --json` and inspect the file list.

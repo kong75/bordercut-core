@@ -1,12 +1,51 @@
 # BorderCut
 
-BorderCut is a small, deterministic background-removal algorithm for images with a visually separable boundary. It uses classical image analysis—no model weights, network requests, accounts, or uploads.
+**Background removal in about 8 kB gzipped. Runs entirely on your device.**
 
-The project is organized as a language-neutral specification with native TypeScript and Dart implementations. Both implementations share the same options, fixtures, result contract, and byte-exact algorithm-v1 alpha output. Flutter codecs and isolate processing live in a separate adapter package; Go remains planned.
+BorderCut removes separable backgrounds with a tiny, dependency-free algorithm. Embed it in a browser, Web Worker, Node.js application, or a Dart/Flutter client. Images stay on the device doing the processing. Once the code is loaded, it works offline: no server, API key, model download, or GPU is required.
 
-The project is currently **pre-1.0 alpha software**. The algorithm contract is versioned, but package APIs may still change between minor releases.
+The TypeScript core is **7.9 kB minified + gzipped**. The optional browser file-to-PNG adapter, including the entire core, is **8.7 kB minified + gzipped**. Both have **zero runtime dependencies**. The native Dart core is also dependency-free; the Flutter adapter adds engine codecs and isolate processing.
 
-Development currently happens in this private repository. The core retains its MIT license for a future public release; package publication is not enabled during private iteration. The product web app lives separately in [kong75/bordercut](https://github.com/kong75/bordercut).
+Use it for product shots, graphics, and other images whose subjects are distinguishable from the background at the image boundary. Difficult scenes can need Remove/Keep guidance; this is a classical image-processing algorithm with [known limits](#known-limits).
+
+## Run locally in your app
+
+```ts
+import { removeBackground } from '@bordercut/core';
+
+const { image, alpha } = removeBackground({ width, height, data: rgba });
+```
+
+In a browser, pass a local `File` or `Blob` directly to the optional adapter:
+
+```ts
+import { removeBackgroundFromBlob } from '@bordercut/core/browser';
+
+const { blob } = await removeBackgroundFromBlob(file); // Transparent PNG, processed locally.
+```
+
+For a site without a bundler, build the package with `npm ci && npm run build --workspace @bordercut/core`, copy `packages/typescript/dist/browser.min.js` into your site, and import it from a module script:
+
+```js
+import { removeBackgroundFromBlob } from './browser.min.js';
+```
+
+That file is a standalone ES module with no additional imports. Use `core.min.js` instead when you already have decoded RGBA pixels. Both files also ship in the npm tarball. Serve them with your own application; no CDN or hosted processing service is required. For responsive interfaces, run processing in a [Web Worker](examples/minimal-web/src/removal-worker.ts).
+
+Packages are not published yet; use this checkout and the [working examples](#supported-runtimes) during private iteration. The project is **pre-1.0 alpha software**, MIT licensed, with a versioned algorithm contract. Package APIs may change between minor releases.
+
+## Small enough to embed
+
+<!-- size:start -->
+| Standalone module | Minified | Minified + gzip | Minified + Brotli |
+| --- | ---: | ---: | ---: |
+| `core.min.js` | 20.6 kB | 7.9 kB | 6.9 kB |
+| `browser.min.js` | 22.7 kB | 8.7 kB | 7.7 kB |
+<!-- size:end -->
+
+These are measured sizes of the complete standalone JavaScript modules, using esbuild minification, gzip level 9, and Brotli quality 11; 1 kB = 1,000 bytes. The browser row includes the core, so the two rows are alternatives. Source maps, documentation, and example UI are excluded. Compressed transfer sizes are not the npm archive size, installation size, runtime memory use, or a Dart/Flutter app-size claim. Actual transfer size depends on server compression.
+
+Run `npm run size` to reproduce the measurement, or `npm run docs:size` to refresh this table and the [exact byte counts and bundle hashes](docs/size/latest.json). CI enforces gzip limits of 8,000 bytes for the core and 9,000 bytes for the browser adapter, and rejects runtime dependencies or external imports in the standalone modules.
 
 ## Before and after
 
@@ -46,16 +85,17 @@ These are measurements on one development machine, not latency guarantees or Dar
 Reproduce with `npm ci && npm run benchmark`. Regenerate previews separately with `npm run docs:showcase`.
 <!-- benchmark:end -->
 
-## Status
+## Supported runtimes
 
-| Target | Status |
+| Target | Integration |
 | --- | --- |
-| TypeScript | Reference implementation, algorithm v1 |
-| Minimal web example | Working reference integration |
-| Node + sharp example | Working file-to-PNG integration |
-| Dart | Native implementation, algorithm v1, fixture-compatible |
-| Flutter | Native codec and isolate adapter |
-| Go | Planned; contract documented |
+| Modern browsers | ES2022 pixel core or native Blob/PNG adapter; [minimal web example](examples/minimal-web) |
+| Web Workers | The same TypeScript core off the UI thread; [worker example](examples/minimal-web/src/removal-worker.ts) |
+| Node.js 20.19+ | Pixel core with your chosen codecs; [file-to-PNG example using sharp](examples/node-sharp) |
+| Dart | Native pixel implementation; [package and usage](packages/dart) |
+| Native Flutter apps | Engine codecs and isolate processing; [adapter and usage](packages/flutter) |
+
+TypeScript and Dart implement algorithm v1 and share the same options, fixtures, and byte-exact fixture alpha output. Image decoding, file access, and platform integration stay in adapters. The Flutter isolate adapter targets native apps; browser apps use the TypeScript implementation.
 
 ## Repository layout
 
@@ -67,7 +107,6 @@ bordercut/
     typescript/            Publishable @bordercut/core package
     dart/                  Pure-Dart algorithm-v1 package
     flutter/               Flutter codecs and isolate adapter
-    go/                    Reserved Go port
   examples/
     minimal-web/           Unbranded Web Worker integration example
     node-sharp/            Runnable Node file adapter example
@@ -203,7 +242,7 @@ See [the algorithm v1 specification](spec/algorithm-v1.md) for the portable cont
 - **Keep brush** guides subject retention through nearby, visually similar material.
 - **Brush size** controls how much evidence each correction stroke supplies.
 
-The public example intentionally contains only the integration needed to exercise these APIs. Product UI, branding, and deployment code belong in a separate application repository that consumes the released package.
+Product UI, branding, and deployment code live separately in the private [web application repository](https://github.com/kong75/bordercut). The examples here demonstrate the library integration.
 
 ## Cross-language compatibility
 

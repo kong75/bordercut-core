@@ -1,8 +1,29 @@
 # @bordercut/core
 
-The dependency-free TypeScript reference implementation of BorderCut's language-neutral background-removal algorithm. It accepts decoded RGBA bytes and performs no file, codec, UI, account, telemetry, or network operations.
+**Local background removal in about 8 kB minified + gzipped. Zero runtime dependencies.**
+
+Run BorderCut inside a browser, Web Worker, or Node.js application. The core accepts decoded RGBA pixels and processes them on the same device. No uploads, API keys, model downloads, or GPU are required; processing works offline once the code is available. It is designed for images with a visually separable background.
 
 Status: pre-1.0 alpha, algorithm contract v1. The package is ESM-only and supports Node.js 20.19 or newer and modern browsers with ES2022 support.
+
+## Size
+
+<!-- size:start -->
+| Standalone module | Minified | Minified + gzip | Minified + Brotli |
+| --- | ---: | ---: | ---: |
+| `core.min.js` | 20.6 kB | 7.9 kB | 6.9 kB |
+| `browser.min.js` | 22.7 kB | 8.7 kB | 7.7 kB |
+<!-- size:end -->
+
+The browser module includes the core plus native Blob decoding and PNG encoding.
+These are complete ES2022 bundles, with no external imports. Sizes use esbuild
+minification, gzip level 9, and Brotli quality 11; 1 kB = 1,000 bytes. Compression
+depends on the serving application. This measures JavaScript transfer size, not
+the npm tarball, runtime memory, or application assets.
+
+Run `npm run size` from the source repository to check the 8,000-byte core and
+9,000-byte browser gzip budgets. Exact measurements and hashes are in the
+[repository size report](https://github.com/kong75/bordercut-core/blob/main/docs/size/latest.json).
 
 ## Installation
 
@@ -13,6 +34,23 @@ npm install @bordercut/core
 ```
 
 For repository development, use `npm ci` at the workspace root.
+
+### Direct browser module
+
+For a site without a bundler, copy `dist/browser.min.js` from the package into
+your site and import it from a `<script type="module">`:
+
+```js
+import { removeBackgroundFromBlob } from './browser.min.js';
+
+const { blob } = await removeBackgroundFromBlob(file);
+```
+
+The file is self-contained. Use `dist/core.min.js` and its `removeBackground`
+export when you already have RGBA pixels. Both modules can be served by your
+application and cached for offline use. While the package is unpublished, build
+them with `npm run build --workspace @bordercut/core` at the repository root;
+they are written to `packages/typescript/dist/`.
 
 ## Usage
 
@@ -114,7 +152,7 @@ Partial option objects are accepted; omitted values use the defaults exported as
 
 The `@bordercut/core/browser` subpath exports `removeBackgroundFromBlob`, `decodeImageBlob`, `encodePngBlob`, and the `BrowserRemovalResult` type.
 
-The npm tarball includes TypeScript sources so its JavaScript and declaration source maps resolve correctly. The portable specification and cross-language fixtures live in the source repository; its canonical hosting URL will be added to package metadata before the first hosted release.
+The npm tarball includes TypeScript sources so its JavaScript and declaration source maps resolve correctly, along with the standalone minified browser modules. The portable specification and cross-language fixtures live in the [source repository](https://github.com/kong75/bordercut-core).
 
 ## License
 

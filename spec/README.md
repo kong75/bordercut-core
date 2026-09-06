@@ -6,7 +6,7 @@ This directory defines the language-neutral contract shared by every BorderCut i
 - `options.schema.json` defines public option names, ranges, and defaults.
 - `fixture.schema.json` defines the portable conformance-fixture format, including synthetic gradients, ordered geometric regions, correction samples, correction strokes, and diagnostic assertions.
 
-The TypeScript package is the reference implementation for algorithm version 1. Dart and Go ports should first match the API contract, then pass every fixture in `fixtures/v1/` before claiming conformance.
+The TypeScript package is the reference implementation for algorithm version 1. The native Dart implementation passes the shared fixtures with byte-exact alpha output. Additional implementations must match the API contract and pass every fixture in `fixtures/v1/` before claiming conformance.
 
 Algorithm revisions are additive and versioned. A behavior-changing revision becomes `algorithm-v2.md`; existing implementations can continue reporting version 1 until updated.
 

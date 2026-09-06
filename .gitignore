@@ -9,12 +9,9 @@ coverage/
 .env.*
 !.env.example
 
-# Future Dart and Flutter ports
+# Dart and Flutter build output
 .dart_tool/
 .packages
 .pub/
 build/
 /pubspec.lock
-
-# Future Go port
-*.test

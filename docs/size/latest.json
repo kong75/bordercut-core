@@ -1,0 +1,25 @@
+{
+  "packageVersion": "0.2.0",
+  "node": "v24.11.1",
+  "esbuild": "0.28.2",
+  "units": "bytes; 1 kB = 1000 bytes",
+  "method": "Self-contained ES2022 ESM bundles of the compiled package entries; esbuild minification; no source maps. gzip level 9; Brotli quality 11. Includes all runtime exports of each entry.",
+  "entries": [
+    {
+      "file": "core.min.js",
+      "minifiedBytes": 20640,
+      "gzipBytes": 7889,
+      "brotliBytes": 6923,
+      "gzipBudgetBytes": 8000,
+      "sha256": "39c9fdc09aa8c47fccedeb8acecc1ed350ac50a3bc95e84cde531767971d1ac4"
+    },
+    {
+      "file": "browser.min.js",
+      "minifiedBytes": 22727,
+      "gzipBytes": 8739,
+      "brotliBytes": 7664,
+      "gzipBudgetBytes": 9000,
+      "sha256": "163c06c6b1f6074fba93c94173c71e436d91b788f93e63d39726edd843bc5db3"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ All notable changes to BorderCut are documented here. The project follows Semant
 
 ### Added
 
+- Standalone core and browser ES modules, reproducible compressed-size reports, and CI gzip budgets of 8,000 and 9,000 bytes.
 - Reproducible README before/after gallery with credited source assets and a TypeScript benchmark retaining raw timing samples and environment details.
 - Optional `@bordercut/core/browser` Blob-to-transparent-PNG adapter with focused tests.
 - Web Worker processing in the minimal browser example, using transferable pixel buffers.
@@ -25,9 +26,14 @@ All notable changes to BorderCut are documented here. The project follows Semant
 
 ### Changed
 
+- Lead package documentation with the small footprint and local, offline execution model; list only implemented integrations.
 - The npm package now builds during `prepack`, ships its TypeScript source alongside source maps, and declares its supported Node version.
 - CI now uses least-privilege permissions, pinned actions, a Node support matrix, and dependency auditing.
 - Correction strokes now run after global segmentation and apply sequentially, so Remove never raises alpha and Keep never lowers it.
+
+### Removed
+
+- Unimplemented Go package placeholder and stale planned-port references.
 
 ## 0.2.0 - 2026-08-30
 

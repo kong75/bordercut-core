@@ -23,6 +23,7 @@ npm run dev
 
 ## Repository rules
 
+- Preserve the small, local-processing core: no runtime dependencies, model downloads, or network calls. Run `npm run size` when changing library code; `npm run check` enforces the standalone browser gzip budgets. Refresh committed measurements with `npm run docs:size` when sizes change.
 - Keep image decoding, encoding, files, UI, and networking outside core algorithm packages.
 - Update `spec/` when changing public behavior or option semantics.
 - Add or revise shared fixtures for cross-language behavior changes.
