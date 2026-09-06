@@ -1,0 +1,45 @@
+[
+  {
+    "id": "butterfly",
+    "width": 1024,
+    "height": 768,
+    "crop": null,
+    "options": {
+      "recoverPaleSubject": false
+    },
+    "removedFraction": 0.6139755249023438,
+    "mode": "multi-color"
+  },
+  {
+    "id": "botanical",
+    "width": 758,
+    "height": 1024,
+    "crop": null,
+    "options": {},
+    "removedFraction": 0.47949476418205805,
+    "mode": "solid"
+  },
+  {
+    "id": "flower",
+    "width": 1024,
+    "height": 871,
+    "crop": {
+      "left": 200,
+      "top": 1300,
+      "width": 2940,
+      "height": 2500
+    },
+    "options": {},
+    "removedFraction": 0.7042114397962113,
+    "mode": "multi-color"
+  },
+  {
+    "id": "apple",
+    "width": 1024,
+    "height": 844,
+    "crop": null,
+    "options": {},
+    "removedFraction": 0.53952069757109,
+    "mode": "solid"
+  }
+]

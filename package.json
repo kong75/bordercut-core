@@ -1,0 +1,53 @@
+{
+  "name": "bordercut",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Tiny, dependency-free background removal that runs locally in browsers, Node.js, Dart, and Flutter.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/kong75/bordercut.git" },
+  "homepage": "https://github.com/kong75/bordercut#readme",
+  "bugs": { "url": "https://github.com/kong75/bordercut/issues" },
+  "keywords": [
+    "background-removal",
+    "image-processing",
+    "rgba",
+    "segmentation",
+    "typescript",
+    "dart",
+    "flutter"
+  ],
+  "workspaces": [
+    "packages/typescript",
+    "examples/minimal-web",
+    "examples/node-sharp"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "size": "npm run build --workspace @bordercut/core && node scripts/check-size.mjs",
+    "docs:size": "npm run build --workspace @bordercut/core && node scripts/check-size.mjs --write",
+    "check:size": "node scripts/check-size.mjs",
+    "docs:showcase": "npm run build --workspace @bordercut/core && node scripts/generate-showcase.mjs",
+    "benchmark": "npm run build --workspace @bordercut/core && node scripts/benchmark.mjs",
+    "dev": "npm run build --workspace @bordercut/core && npm run dev --workspace @bordercut/minimal-web-example",
+    "build": "npm run build --workspace @bordercut/core && npm run build --workspace @bordercut/minimal-web-example && npm run build --workspace @bordercut/node-sharp-example",
+    "typecheck": "npm run build --workspace @bordercut/core && npm run typecheck --workspace @bordercut/core && npm run typecheck --workspace @bordercut/minimal-web-example && npm run typecheck --workspace @bordercut/node-sharp-example",
+    "test": "npm run test --workspace @bordercut/core",
+    "test:watch": "npm run test:watch --workspace @bordercut/core",
+    "test:pack": "node scripts/test-package.mjs",
+    "test:examples": "node scripts/test-node-example.mjs",
+    "check": "npm run typecheck && npm test && npm run build && npm run check:size && npm run test:examples && npm run test:pack",
+    "pack:core": "npm pack --workspace @bordercut/core",
+    "check:release": "node scripts/check-release-metadata.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "ajv": "^8.20.0",
+    "esbuild": "0.28.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3",
+    "vitest": "^3.2.4"
+  }
+}

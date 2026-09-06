@@ -1,0 +1,51 @@
+{
+  "name": "@bordercut/core",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Tiny, dependency-free background removal. Runs locally in browsers, Web Workers, and Node.js without model downloads.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/kong75/bordercut.git" },
+  "homepage": "https://github.com/kong75/bordercut#readme",
+  "bugs": { "url": "https://github.com/kong75/bordercut/issues" },
+  "keywords": [
+    "background-removal",
+    "image-processing",
+    "rgba",
+    "segmentation",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node ../../scripts/build-browser.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

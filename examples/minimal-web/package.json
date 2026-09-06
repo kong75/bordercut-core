@@ -1,0 +1,14 @@
+{
+  "name": "@bordercut/minimal-web-example",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@bordercut/core": "0.2.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit"
+  }
+}

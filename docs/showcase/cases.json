@@ -1,0 +1,31 @@
+[
+  {
+    "id": "butterfly",
+    "title": "Butterfly specimen · fine antennae and patterned wings",
+    "source": "sources/butterfly.jpg",
+    "kind": "Butterfly photograph",
+    "options": { "recoverPaleSubject": false }
+  },
+  {
+    "id": "botanical",
+    "title": "Vintage botanical print · pale petals and branching stems",
+    "source": "sources/botanical.jpg",
+    "kind": "Historical botanical illustration",
+    "options": {}
+  },
+  {
+    "id": "flower",
+    "title": "Dark flower photo · low-contrast petal edges",
+    "source": "sources/flower.jpg",
+    "kind": "Purple flower photograph",
+    "crop": { "left": 200, "top": 1300, "width": 2940, "height": 2500 },
+    "options": {}
+  },
+  {
+    "id": "apple",
+    "title": "Product photo · white background",
+    "source": "sources/apple.jpg",
+    "kind": "Photograph",
+    "options": {}
+  }
+]

@@ -1,0 +1,47 @@
+name: Publish @bordercut/core
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ !github.event.repository.private && vars.BORDERCUT_NPM_PUBLISH_ENABLED == 'true' && !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.14.0
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install npm with trusted-publishing support
+        run: npm install --global npm@11.5.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate release
+        run: |
+          npm run check
+          npm run check:release
+          node -e "const p=require('./packages/typescript/package.json'); if ('v'+p.version !== process.env.TAG) throw new Error('Release tag must equal v'+p.version)"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+
+      - name: Publish with provenance
+        run: npm publish --workspace @bordercut/core --access public --provenance

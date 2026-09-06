@@ -1,0 +1,17 @@
+node_modules/
+**/dist/
+.vite/
+coverage/
+*.log
+*.tgz
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Dart and Flutter build output
+.dart_tool/
+.packages
+.pub/
+build/
+/pubspec.lock

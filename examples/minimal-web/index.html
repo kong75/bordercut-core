@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BorderCut minimal example</title>
+  </head>
+  <body>
+    <main>
+      <h1>BorderCut minimal example</h1>
+      <p>This intentionally small example keeps file decoding and canvas interaction outside the core package.</p>
+
+      <div class="controls">
+        <label>
+          Image
+          <input id="file" type="file" accept="image/*" />
+        </label>
+        <button id="sample" type="button">Load generated sample</button>
+        <label>
+          Correction
+          <select id="tool">
+            <option value="background">Remove nearby background</option>
+            <option value="foreground">Keep nearby subject</option>
+          </select>
+        </label>
+        <label>
+          Brush radius
+          <input id="radius" type="range" min="1" max="40" value="8" />
+          <output id="radiusValue">8 px</output>
+        </label>
+        <button id="undo" type="button" disabled>Undo correction</button>
+        <button id="clear" type="button" disabled>Clear corrections</button>
+        <button id="download" type="button" disabled>Download PNG</button>
+      </div>
+
+      <p id="status" role="status">Choose an image to begin.</p>
+      <div id="stage" class="stage" hidden>
+        <canvas id="result" aria-label="Background removal result"></canvas>
+        <canvas id="guide" aria-label="Draw a correction line"></canvas>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

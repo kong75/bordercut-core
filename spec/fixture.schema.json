@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:bordercut:fixtures:v1",
+  "title": "BorderCut conformance fixture collection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["algorithmVersion", "cases"],
+  "properties": {
+    "algorithmVersion": { "const": 1 },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "width", "height", "background", "regions", "options", "assertions"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "referenceAlphaSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "width": { "type": "integer", "minimum": 1 },
+          "height": { "type": "integer", "minimum": 1 },
+          "background": { "$ref": "#/$defs/background" },
+          "regions": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                { "$ref": "#/$defs/rectRegion" },
+                { "$ref": "#/$defs/ellipseRegion" }
+              ]
+            }
+          },
+          "samples": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/sample" }
+          },
+          "strokes": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/stroke" }
+          },
+          "options": { "$ref": "urn:bordercut:options:v1" },
+          "assertions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y"],
+              "anyOf": [
+                {
+                  "required": ["alphaMin"],
+                  "properties": { "alphaMin": true }
+                },
+                {
+                  "required": ["alphaMax"],
+                  "properties": { "alphaMax": true }
+                }
+              ],
+              "properties": {
+                "x": { "type": "integer", "minimum": 0 },
+                "y": { "type": "integer", "minimum": 0 },
+                "alphaMin": { "type": "integer", "minimum": 0, "maximum": 255 },
+                "alphaMax": { "type": "integer", "minimum": 0, "maximum": 255 }
+              }
+            }
+          },
+          "diagnostics": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": { "enum": ["solid", "multi-color", "gradient"] },
+              "subjectRecoveryApplied": { "type": "boolean" },
+              "removedFractionMin": { "type": "number", "minimum": 0, "maximum": 1 },
+              "removedFractionMax": { "type": "number", "minimum": 0, "maximum": 1 },
+              "recoveredFractionMin": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "rgba": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "type": "integer", "minimum": 0, "maximum": 255 },
+        { "type": "integer", "minimum": 0, "maximum": 255 },
+        { "type": "integer", "minimum": 0, "maximum": 255 },
+        { "type": "integer", "minimum": 0, "maximum": 255 }
+      ],
+      "items": false
+    },
+    "background": {
+      "oneOf": [
+        { "$ref": "#/$defs/rgba" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "axis", "from", "to"],
+          "properties": {
+            "type": { "const": "linear-gradient" },
+            "axis": { "enum": ["x", "y"] },
+            "from": { "$ref": "#/$defs/rgba" },
+            "to": { "$ref": "#/$defs/rgba" }
+          }
+        }
+      ]
+    },
+    "rectRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape", "xMin", "yMin", "xMax", "yMax", "color"],
+      "properties": {
+        "shape": { "const": "rect" },
+        "xMin": { "type": "integer", "minimum": 0 },
+        "yMin": { "type": "integer", "minimum": 0 },
+        "xMax": { "type": "integer", "minimum": 0 },
+        "yMax": { "type": "integer", "minimum": 0 },
+        "color": { "$ref": "#/$defs/rgba" }
+      }
+    },
+    "ellipseRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape", "centerX", "centerY", "radiusX", "radiusY", "color"],
+      "properties": {
+        "shape": { "const": "ellipse" },
+        "centerX": { "type": "number", "minimum": 0 },
+        "centerY": { "type": "number", "minimum": 0 },
+        "radiusX": { "type": "number", "exclusiveMinimum": 0 },
+        "radiusY": { "type": "number", "exclusiveMinimum": 0 },
+        "color": { "$ref": "#/$defs/rgba" }
+      }
+    },
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "kind"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 },
+        "kind": { "enum": ["background", "foreground"] }
+      }
+    },
+    "strokePoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 }
+      }
+    },
+    "stroke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "radius", "points"],
+      "properties": {
+        "kind": { "enum": ["background", "foreground"] },
+        "radius": { "type": "number", "exclusiveMinimum": 0 },
+        "points": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/strokePoint" }
+        }
+      }
+    }
+  }
+}
