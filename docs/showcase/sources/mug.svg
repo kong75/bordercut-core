@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="ceramic"><stop stop-color="#8b453c"/><stop offset=".38" stop-color="#cf7860"/><stop offset=".7" stop-color="#bf6752"/><stop offset="1" stop-color="#883d37"/></linearGradient>
+    <linearGradient id="coffee" x2="0" y2="1"><stop stop-color="#482c27"/><stop offset="1" stop-color="#724838"/></linearGradient>
+  </defs>
+  <path fill="#f3eee4" d="M0 0h1024v1024H0z"/>
+  <path d="M664 390h50c153 0 153 226 0 226h-50" fill="none" stroke="#a95647" stroke-width="57"/>
+  <path fill="url(#ceramic)" d="M268 340h424l-28 377q-8 74-184 74t-184-74z"/>
+  <ellipse cx="480" cy="340" rx="212" ry="69" fill="#da9277"/>
+  <ellipse cx="480" cy="340" rx="184" ry="46" fill="url(#coffee)"/>
+  <path d="M332 430l17 257" stroke="#eeb293" stroke-width="15" opacity=".5" stroke-linecap="round"/>
+</svg>

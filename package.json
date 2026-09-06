@@ -5,6 +5,9 @@
   "type": "module",
   "description": "Language-neutral background-removal specification with native TypeScript and Dart packages.",
   "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/kong75/bordercut-core.git" },
+  "homepage": "https://github.com/kong75/bordercut-core#readme",
+  "bugs": { "url": "https://github.com/kong75/bordercut-core/issues" },
   "keywords": [
     "background-removal",
     "image-processing",
@@ -23,6 +26,8 @@
     "node": ">=20.19"
   },
   "scripts": {
+    "docs:showcase": "npm run build --workspace @bordercut/core && node scripts/generate-showcase.mjs",
+    "benchmark": "npm run build --workspace @bordercut/core && node scripts/benchmark.mjs",
     "dev": "npm run build --workspace @bordercut/core && npm run dev --workspace @bordercut/minimal-web-example",
     "build": "npm run build --workspace @bordercut/core && npm run build --workspace @bordercut/minimal-web-example && npm run build --workspace @bordercut/node-sharp-example",
     "typecheck": "npm run typecheck --workspace @bordercut/core && npm run typecheck --workspace @bordercut/minimal-web-example && npm run typecheck --workspace @bordercut/node-sharp-example",

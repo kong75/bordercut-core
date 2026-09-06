@@ -1,16 +1,20 @@
 # Release process
 
-Publishing is intentionally a maintainer decision. The release workflow runs only after a maintainer publishes a hosted release and npm trusted publishing has been configured for this repository.
+Publishing is intentionally a maintainer decision. During private iteration,
+the release workflow skips package publication. Once the repository is public,
+it also requires the `BORDERCUT_NPM_PUBLISH_ENABLED` repository variable to be
+`true`, a published hosted release, and npm trusted publishing configured for
+this repository.
 
 ## Before the first hosted release
 
-- Choose the canonical repository URL.
-- Add `repository`, `homepage`, and `bugs` fields to the root and `@bordercut/core` package metadata.
+- Confirm the canonical repository URL, currently `https://github.com/kong75/bordercut-core`, and the matching npm/Dart metadata.
 - Replace any temporary hosting references in project settings.
 - Enable private vulnerability reporting and branch protection on the repository host.
 - Configure an npm trusted publisher for `.github/workflows/publish.yml` and its `npm` environment.
-- Add `repository` and `issue_tracker` fields to both Dart package manifests.
+- Review the committed before/after examples and regenerate the README performance table on the intended release commit.
 - Configure verified pub.dev publishers before enabling Dart or Flutter package publication.
+- Make the core repository public and set `BORDERCUT_NPM_PUBLISH_ENABLED=true` only when package publication is approved.
 
 ## Local release validation
 
@@ -24,7 +28,8 @@ Publishing is intentionally a maintainer decision. The release workflow runs onl
 8. Run `dart pub publish --dry-run` in `packages/dart`.
 9. Run `flutter pub publish --dry-run` in `packages/flutter`.
 
-Run `npm run check:release` after the canonical repository metadata has been added. This guard intentionally fails while that hosting-dependent metadata is absent.
+Run `npm run check:release` to validate the committed repository metadata. This
+checks local metadata, not repository visibility or publisher configuration.
 
 The automated `test:pack` script performs the pack, runtime-import, and TypeScript-declaration smoke tests in an isolated temporary directory. It never publishes the tarball.
 

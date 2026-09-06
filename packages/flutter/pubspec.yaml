@@ -1,6 +1,8 @@
 name: bordercut_flutter
 description: Flutter codecs and isolate processing for the native BorderCut background remover.
 version: 0.2.0
+repository: https://github.com/kong75/bordercut-core
+issue_tracker: https://github.com/kong75/bordercut-core/issues
 
 environment:
   sdk: ^3.6.0

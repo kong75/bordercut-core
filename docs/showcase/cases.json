@@ -1,0 +1,23 @@
+[
+  {
+    "id": "apple",
+    "title": "Product photo · white background",
+    "source": "sources/apple.jpg",
+    "kind": "Photograph",
+    "options": {}
+  },
+  {
+    "id": "bottle",
+    "title": "Controlled illustration · gradient background",
+    "source": "sources/bottle.svg",
+    "kind": "Original SVG illustration",
+    "options": {}
+  },
+  {
+    "id": "mug",
+    "title": "Controlled illustration · enclosed handle opening",
+    "source": "sources/mug.svg",
+    "kind": "Original SVG illustration",
+    "options": { "interiorBackground": true }
+  }
+]

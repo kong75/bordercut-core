@@ -27,5 +27,13 @@ final output = await removeBackgroundFromBytes(
 CPU-intensive algorithm off the UI isolate. `decodeImageBytes` and `encodePng`
 use Flutter's engine codecs. The package makes no network requests.
 
+The adapter accepts and returns straight-alpha RGBA pixels, converting to the
+premultiplied format required by Flutter's native encoder. This conversion can
+round translucent color channels; RGB values beneath fully transparent pixels
+are not preserved.
+
+The isolate helpers target native Flutter applications. Flutter web does not
+support `Isolate.run`; web integrations can use `@bordercut/core/browser`.
+
 This adapter is intentionally separate from the pure Dart package so command
 line and server applications never take a Flutter dependency.

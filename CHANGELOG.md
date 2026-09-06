@@ -4,8 +4,13 @@ All notable changes to BorderCut are documented here. The project follows Semant
 
 ## Unreleased
 
+### Fixed
+
+- Flutter codecs now convert correctly between the core's straight RGBA and native premultiplied RGBA, validate encoding inputs, and release native resources on codec initialization failures.
+
 ### Added
 
+- Reproducible README before/after gallery with credited source assets and a TypeScript benchmark retaining raw timing samples and environment details.
 - Optional `@bordercut/core/browser` Blob-to-transparent-PNG adapter with focused tests.
 - Web Worker processing in the minimal browser example, using transferable pixel buffers.
 - Runnable Node + `sharp` file-to-PNG integration example and automated smoke test.

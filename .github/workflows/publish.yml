@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   publish:
-    if: ${{ !github.event.release.prerelease }}
+    if: ${{ !github.event.repository.private && vars.BORDERCUT_NPM_PUBLISH_ENABLED == 'true' && !github.event.release.prerelease }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: npm

@@ -47,17 +47,23 @@ is bounded and constrained by color continuity and edges.
 
 ## Development
 
+From the repository root, use Flutter 3.41.7 to resolve the shared Dart/Flutter
+workspace, then analyze and test the pure Dart package:
+
 ```bash
-dart pub get
-dart analyze
-dart test
-dart pub publish --dry-run --ignore-warnings
+flutter pub get
+dart analyze packages/dart
+dart test packages/dart
+cd packages/dart
+dart pub publish --dry-run
 ```
+
+Consumers of the published pure Dart package do not need Flutter.
 
 The tests run the shared cross-language fixtures and require byte-for-byte alpha
 compatibility with the TypeScript reference implementation.
 
-The dry run currently ignores the expected missing-repository warning. Add the
-canonical hosted URL and run without `--ignore-warnings` before publication.
+Run publication checks from a clean checkout. The repository is private during
+development; package publication is a separate maintainer decision.
 
 MIT licensed. BorderCut is pre-1.0 alpha software.

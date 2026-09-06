@@ -1,0 +1,28 @@
+[
+  {
+    "id": "apple",
+    "width": 1024,
+    "height": 844,
+    "options": {},
+    "removedFraction": 0.53952069757109,
+    "mode": "solid"
+  },
+  {
+    "id": "bottle",
+    "width": 1024,
+    "height": 1024,
+    "options": {},
+    "removedFraction": 0.8050470352172852,
+    "mode": "gradient"
+  },
+  {
+    "id": "mug",
+    "width": 1024,
+    "height": 1024,
+    "options": {
+      "interiorBackground": true
+    },
+    "removedFraction": 0.7888574600219727,
+    "mode": "solid"
+  }
+]

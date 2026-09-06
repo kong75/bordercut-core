@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="backdrop" x2="1" y2="1"><stop stop-color="#e6edf6"/><stop offset="1" stop-color="#cce9de"/></linearGradient>
+    <linearGradient id="bottle"><stop stop-color="#153e42"/><stop offset=".3" stop-color="#367a75"/><stop offset=".7" stop-color="#235854"/><stop offset="1" stop-color="#10363b"/></linearGradient>
+    <linearGradient id="cap"><stop stop-color="#122e33"/><stop offset=".5" stop-color="#33545a"/><stop offset="1" stop-color="#162d34"/></linearGradient>
+  </defs>
+  <path fill="url(#backdrop)" d="M0 0h1024v1024H0z"/>
+  <path fill="url(#bottle)" d="M422 248h180v80c0 46 92 65 92 147v304q0 62-62 62H392q-62 0-62-62V475c0-82 92-101 92-147z"/>
+  <rect x="413" y="181" width="198" height="97" rx="18" fill="url(#cap)"/>
+  <path d="M355 490v266" stroke="#92b9a2" stroke-width="12" opacity=".35" stroke-linecap="round"/>
+  <rect x="368" y="476" width="288" height="202" rx="4" fill="#e4ddc8"/>
+  <path d="M473 532h78M453 570h118M477 608h70" stroke="#446c61" stroke-width="7" stroke-linecap="round"/>
+</svg>

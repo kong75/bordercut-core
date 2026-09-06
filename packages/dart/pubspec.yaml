@@ -1,6 +1,8 @@
 name: bordercut
 description: Dependency-free, deterministic background removal for typed RGBA pixel buffers.
 version: 0.2.0
+repository: https://github.com/kong75/bordercut-core
+issue_tracker: https://github.com/kong75/bordercut-core/issues
 
 environment:
   sdk: ^3.6.0

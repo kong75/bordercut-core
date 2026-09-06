@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Dependency-free, rule-based background removal for RGBA pixel buffers.",
   "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/kong75/bordercut-core.git" },
+  "homepage": "https://github.com/kong75/bordercut-core#readme",
+  "bugs": { "url": "https://github.com/kong75/bordercut-core/issues" },
   "keywords": [
     "background-removal",
     "image-processing",

@@ -6,6 +6,46 @@ The project is organized as a language-neutral specification with native TypeScr
 
 The project is currently **pre-1.0 alpha software**. The algorithm contract is versioned, but package APIs may still change between minor releases.
 
+Development currently happens in this private repository. The core retains its MIT license for a future public release; package publication is not enabled during private iteration. The product web app lives separately in [kong75/bordercut](https://github.com/kong75/bordercut).
+
+## Before and after
+
+<!-- showcase:start -->
+| Example | Before | After |
+| --- | --- | --- |
+| Product photo · white background | ![Photograph before removal](docs/showcase/generated/apple-before.png) | ![Actual BorderCut output over a checkerboard](docs/showcase/generated/apple-after.png) |
+| Controlled illustration · gradient background | ![Original SVG illustration before removal](docs/showcase/generated/bottle-before.png) | ![Actual BorderCut output over a checkerboard](docs/showcase/generated/bottle-after.png) |
+| Controlled illustration · enclosed handle opening | ![Original SVG illustration before removal](docs/showcase/generated/mug-before.png) | ![Actual BorderCut output over a checkerboard](docs/showcase/generated/mug-after.png) |
+
+These are actual algorithm outputs, without manual retouching or correction strokes. The checkerboard only displays transparency. The apple and bottle use default options; the mug enables `interiorBackground` to clear its handle opening. Processing uses images up to 1024 pixels on the longest edge; previews are reduced for the README.
+
+The apple is a photograph; its output retains part of the contact shadow. The bottle and mug are controlled SVG illustrations, not evidence of photographic accuracy. These examples demonstrate favorable conditions rather than a general segmentation benchmark. See [source credits, exact inputs, and regeneration instructions](docs/showcase/README.md).
+<!-- showcase:end -->
+
+## Performance
+
+<!-- benchmark:start -->
+Measured 2026-09-06 with Node v24.11.1 on Intel(R) Core(TM) Ultra 9 275HX, win32 x64. Algorithm v1.
+
+| Input | Pixels | Median | p95 |
+| --- | --- | ---: | ---: |
+| apple | 512 × 422 | 45.6 ms | 56.6 ms |
+| apple | 1024 × 844 | 145.4 ms | 204.6 ms |
+| apple | 2011 × 1657 | 556.8 ms | 599.7 ms |
+| bottle | 512 × 512 | 46.7 ms | 66.8 ms |
+| bottle | 1024 × 1024 | 197.9 ms | 225.3 ms |
+| bottle | 2048 × 2048 | 914.1 ms | 972.8 ms |
+| mug | 512 × 512 | 42.1 ms | 54.3 ms |
+| mug | 1024 × 1024 | 186.7 ms | 200.4 ms |
+| mug | 2048 × 2048 | 825.8 ms | 877.6 ms |
+
+5 warm-up calls and 20 timed calls per row. Times cover the synchronous TypeScript algorithm and its allocations; they exclude decoding, resizing, PNG encoding, file I/O, and worker overhead. p95 uses nearest rank. Inputs and options match the showcase cases; photos are never enlarged.
+
+These are measurements on one development machine, not latency guarantees or Dart/Flutter/browser measurements. Content, settings, runtime, hardware, and background activity affect timings. [Raw samples, source hashes, and environment](docs/benchmarks/latest.json) are retained so results can be compared honestly.
+
+Reproduce with `npm ci && npm run benchmark`. Regenerate previews separately with `npm run docs:showcase`.
+<!-- benchmark:end -->
+
 ## Status
 
 | Target | Status |
@@ -47,8 +87,8 @@ npm run dev
 
 The example is served locally by Vite. Its production build is written to `examples/minimal-web/dist/`; the TypeScript library is written to `packages/typescript/dist/`.
 
-For Dart and Flutter, use Flutter 3.24 or newer (the workspace currently tests
-with Flutter 3.41.7):
+For Dart and Flutter workspace development, use Flutter 3.41.7, matching CI.
+Run these commands from the repository root:
 
 ```bash
 flutter pub get
